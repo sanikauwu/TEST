@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>心理テスト</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+     <!-- home-->
+    <div id="start-section">
+      <h1>HSPテストへようこそ!</h1>
+      <p>このテストはあなたの感受性をチェックするものです。</p>
+      <img src="test/start.png" alt="Welcome Image" style="height: 300px; width: auto; margin-bottom: 20px;">
+      <button id="start-button" onclick="startQuiz()">START</button>
+    </div>
+
+    <!-- テスト問題セクション -->
+    <div id="quiz-section">
+      <!-- イラスト画像 -->
+      <div class="image-section">
+        <img src="test/image1-1.png" alt="イラスト1-1" id="question-image">
+        <!-- 返回按钮 -->
+      </div>
+
+      <!-- 質問文 -->
+      <p id="question-description">スクで仕事や勉強をしている時、周りで人が話したり、電話が鳴り続けたら、あなたはどう感じますか</p>
+
+      <!-- 回答ボタン -->
+      <button class="answer-button" style="--top-offset: 501px;" onclick="nextQuestion(3)">とても気が散って、集中できなくなる</button>
+      <button class="answer-button" style="--top-offset: 643px;" onclick="nextQuestion(2)">少し気になるけど、なんとか作業を続けられる</button>
+      <button class="answer-button" style="--top-offset: 785px;" onclick="nextQuestion(1)">音は気にならず、集中して作業できる</button>
+    </div>
+
+    <!-- 結果表示セクション（非表示） -->
+    <div id="result-section" style="display: none;">
+      <h1>テスト結果</h1>
+      <img id="result-image" src="test/end1.png" alt="Result Image"style="height: 300px;width:auto; margin-bottom: 20px;">
+      <p>あなたのスコアは：<span id="final-score"></span></p>
+      <p id="final-result"></p>
+    </div>
+  </div>
+
+  <script>
+      // 初始化全局变量
+    let currentScore = 0; // 用于记录分数
+    let currentQuestionIndex = 0; // 当前题目索引
+    let totalScore = 0;
+    let questionIndex = 0;  // 初始化为第一题
+
+    const questions = [
+    {
+        image: "test/image1-1.png",
+        description: "質問1:デスクで仕事や勉強をしている時、周りで人が話したり、電話が鳴り続けたら、あなたはどう感じますか",
+        answers: [
+        { text: "とても気が散って、集中できなくなる", score: 3 },
+        { text: "少し気になるけど、なんとか作業を続けられる", score: 2 },
+        { text: "音は気にならず、集中して作業できる", score: 1 }
+        ]
+    },
+    {
+        image: "test/image1-1.png",
+        description: "質問1:デスクで仕事や勉強をしている時、周りで人が話したり、電話が鳴り続けたら、あなたはどう感じますか",
+        answers: [
+        { text: "とても気が散って、集中できなくなる", score: 3 },
+        { text: "少し気になるけど、なんとか作業を続けられる", score: 2 },
+        { text: "音は気にならず、集中して作業できる", score: 1 }
+        ]
+    },
+    {
+        image: "test/image1-2.png",
+        description: "質問2:会議や人前で話す必要がある時、どう感じますか",
+        answers: [
+        { text: "とても緊張して、心臓がドキドキする", score: 3 },
+        { text: "少し緊張するけど、なんとか話せる", score: 2 },
+        { text: "自信があり、問題なく話せる", score: 1 }
+        ]
+    },
+    {
+        image: "test/image1-3.png",
+        description: "質問3:仕事でたくさんのタスクを同時にこなす時、どうしますか",
+        answers: [
+        { text: "すごく不安になって、始めるのが難しい", score: 3 },
+        { text: "プレッシャーを感じるけど、順番に片付けていける", score: 2 },
+        { text: "落ち着いて、計画通りに進められる", score: 1 }
+        ]
+    },
+    {
+        image: "test/image2-1.png",
+        description: "質問1:友達の誕生日パーティーや集まりで、音楽が大きくて賑やかな場所にいる時、どう感じますか",
+        answers: [
+        { text: "うるさすぎて、早く帰りたくなる", score: 3 },
+        { text: "少し気になるけど、なんとか大丈夫", score: 2 },
+        { text: "その雰囲気が好きで、楽しく感じる", score: 1 }
+        ]
+    },
+    {
+        image: "test/image2-2.png",
+        description: "質問2:誰かが急にプライベートな質問をしてきた時、どう反応しますか",
+        answers: [
+        { text: "嫌な気持ちになって、その話題を避けたくなる", score: 3 },
+        { text: "少し困るけど、答えようとする", score: 2 },
+        { text: "全然気にならず、喜んで答える", score: 1 }
+        ]
+    },
+    {
+        image: "test/image2-3.png",
+        description: "質問3:社交の場が終わった後、どんな気持ちになりますか",
+        answers: [
+        { text: "すごく疲れて、休む時間が必要になる", score: 3 },
+        { text: "少し疲れるけど、すぐに回復する", score: 2 },
+        { text: "特に疲れを感じず、楽しかったと思う", score: 1 }
+        ]
+    },
+    {
+        image: "test/image3-1.png",
+        description: "質問1:混んでいる街中を歩いている時、周りの騒音や人混みで、どう感じますか",
+        answers: [
+        { text: "すすごく不快で、早くその場を離れたい", score: 3 },
+        { text: "少し気になるけど、歩き続けられる", score: 2 },
+        { text: "騒音や人混みは気にならず、普通だと感じる", score: 1 }
+        ]
+    },
+    {
+        image: "test/image3-2.png",
+        description: "質問2:家でリラックスしている時に、隣人の音や外の車の音が聞こえたら、どうしますか",
+        answers: [
+        { text: "イライラして、音を止めたくなる", score: 3 },
+        { text: "少し気になるけど、リラックスはできる", score: 2 },
+        { text: "音は気にならず、リラックスできる", score: 1 }
+        ]
+    },
+    {
+        image: "test/image3-3.png",
+        description: "質問3:外で順番待ちをしている時、隣に知らない人が近くに立っていたら、どう感じますか",
+        answers: [
+        { text: "距離を取りたくなるくらい不快だ", score: 3 },
+        { text: "少し気になるけど、我慢できる", score: 2 },
+        { text: "全然気にならない、普通だと思う", score: 1 }
+        ]
+    },
+    {
+        image: "test/image4-1.png",
+        description: "質問1:ショッピングセンターでたくさんの人や商品を見た時、どう感じますか",
+        answers: [
+        { text: "騒がしくて落ち着かず、早く帰りたくなる", score: 3 },
+        { text: "少し疲れるけど、まだ買い物できる", score: 2 },
+        { text: "ショッピングが楽しくてリラックスできる", score: 1 }
+        ]
+    },
+    {
+        image: "test/image4-2.png",
+        description: "質問2:レストランでメニューがたくさんあって、何を頼むか迷った時、どうしますか",
+        answers: [
+        { text: "すごく迷って、選べなくて焦る", score: 3 },
+        { text: "少し緊張するけど、なんとか話せる", score: 2 },
+        { text: "特に悩まず、すぐに決められる", score: 1 }
+        ]
+    },
+    {
+        image: "test/image4-3.png",
+        description: "質問3:レジの列に並んでいて、前の人がゆっくりだったり、トラブルがあった時、どう感じますか",
+        answers: [
+        { text: "イライラして、焦る", score: 3 },
+        { text: "少し気になるけど、待てる", score: 2 },
+        { text: "気にせず、待つのは普通だと思う", score: 1 }
+        ]
+    },
+    {
+        image: "test/image5-1.png",
+        description: "質問1:家で読書や映画を楽しんでいる時、誰かに邪魔されたらどう反応しますか",
+        answers: [
+        { text: "とても腹が立って、静かな時間を邪魔されたと感じる", score: 3 },
+        { text: "少し不満だけど、続けられる", score: 2 },
+        { text: "気にせず、リラックスを続けられる", score: 1 }
+        ]
+    },
+    {
+        image: "test/image5-2.png",
+        description: "質問2:1日ゆっくり過ごそうと思っていたのに、誰かがイベントに誘ってきたら、どうしますか",
+        answers: [
+        { text: "計画が崩れてしまい、行きたくなくなる", score: 3 },
+        { text: "少し迷うけど、結局参加するかもしれない", score: 2 },
+        { text: "喜んで参加し、問題ないと感じる", score: 1 }
+        ]
+    },
+    {
+        image: "test/image5-3.png",
+        description: "質問3:公園を散歩したり、音楽を聴いてリラックスしている時、自然や音楽で落ち着きますか",
+        answers: [
+        { text: "はい、とてもリラックスして心が安らぐ", score: 3 },
+        { text: "たまにそう感じるけど、いつもではない", score: 2 },
+        { text: "特に気にせず、他のことに集中する", score: 1 }
+        ]
+    },
+  // 添加更多问题...
+];
+
+    const results = [
+      { range: [0, 16], image: "test/end1.png",text: "あなたの結果は 一般の方 です。\nあなたは周りのことを程よく感じ取り、刺激にもあまり疲れないタイプです。いいですね！" },
+      { range: [17, 26], image: "test/end2.png",text: "あなたの結果は 適応力が強い「キツネ ちゃん」です。\n環境の変化や周りの状況にあまり影響されず、リラックスして物事に取り組むことができます。大抵のことには動じず、周囲の刺激に強いタイプです。積極的にいろんなことに挑戦することができるでしょう。" },
+      { range: [27, 36], image: "test/end3.png",text: "あなたの結果は 繊細で慎重な「フクロウ ちゃん」です。\n時々敏感に反応することがありますが、バランスを取るのが得意です。少しのプレッシャーやストレスを感じることはあっても、冷静に対応できることが多いでしょう。適度にリラックスする時間を確保すると、より快適に過ごせます。" },
+      { range: [37, 45], image: "test/end4.png",text: "あなたの結果はとても敏感な「ウサギ ちゃん」 です。\n周りの環境や他人の言動に強く反応しやすく、疲れやすい傾向があります。静かで穏やかな環境が好きで、ストレスを感じやすいかもしれません。自分のペースを大切にしながら、無理をしないようにしましょう。" },
+    ];
+
+    // 定义背景颜色数组
+    const backgroundColors = [
+  "#FF85B7", // 前1~4题背景颜色
+  "#96CFDF", // 第5~7题背景颜色
+  "#FFD064", // 第8~10题背景颜色
+  "#CFB7B7", // 第11~13题背景颜色
+  "#FEF2E8", //14~16
+];
+
+// 更新背景颜色
+function updateBackgroundColor(questionIndex) {
+      let backgroundColor;
+
+      if (questionIndex < 4) {
+        backgroundColor = backgroundColors[0]; // 题目1-4背景颜色
+      } else if (questionIndex < 7) {
+        backgroundColor = backgroundColors[1]; // 题目5-7背景颜色
+      } else if (questionIndex < 10) {
+        backgroundColor = backgroundColors[2]; // 题目8-10背景颜色
+      } else if (questionIndex < 13) {
+        backgroundColor = backgroundColors[3]; // 题目11-13背景颜色
+      } else {
+        backgroundColor = backgroundColors[4]; // 题目14-17背景颜色
+      }
+
+// 更新页面背景颜色
+  document.body.style.backgroundColor = backgroundColor;
+}
+
+  // 加载当前问题的内容
+  function loadQuestion(questionIndex) {
+    updateBackgroundColor(questionIndex);
+
+  const currentQuestion = questions[questionIndex];
+  document.getElementById("question-image").src = currentQuestion.image;
+  document.getElementById("question-description").textContent = currentQuestion.description;
+
+  // 更新按钮的答案内容
+  const buttons = document.querySelectorAll(".answer-button");
+  buttons.forEach((button, index) => {
+    if (currentQuestion.answers[index]) {
+      button.style.display = "inline-block";
+    button.textContent = currentQuestion.answers[index].text;
+ // 绑定得分到按钮点击事件
+ button.onclick = function () {
+        nextQuestion(currentQuestion.answers[index].score);
+        };
+    } else {
+        button.style.display = "none"; // 如果选项不足，隐藏按钮
+        }
+      });
+}
+  // 下一题逻辑
+  function nextQuestion(score) {
+  // 更新分数（可以根据需要记录分数）
+  currentScore += score;
+  totalScore = currentScore; // 把 currentScore 赋值给 totalScore
+
+  // 检查是否还有下一题
+  if (currentQuestionIndex + 1 < questions.length) {
+    currentQuestionIndex++;
+    loadQuestion(currentQuestionIndex);
+  } else {
+    showResult(); // 如果没有下一题，显示结果
+  }
+}
+
+window.onload = function() {
+    nextQuestion(0); // 初始化问题
+};
+    
+function startQuiz() {
+  // 隐藏开始页面
+  document.getElementById('start-section').style.display = "none";
+
+  // 显示测试部分
+  document.getElementById('quiz-section').style.display = "block";
+
+  //隐藏结果部分
+  document.getElementById('result-section').style.display = "none";
+}
+
+function showResult() {
+  // 隐藏问题部分，显示结果部分
+  document.getElementById('quiz-section').style.display = "none";
+  document.getElementById('result-section').style.display = "block";
+
+  // 显示最终得分
+  document.getElementById('final-score').textContent = currentScore; // 使用 currentScore 而不是 totalScore
+
+  // 根据分数找到对应的结果
+  const result = results.find(r => currentScore >= r.range[0] && currentScore <= r.range[1]);
+
+  // 更新图片和文本
+  if (result) {
+    document.getElementById('result-image').src = result.image;
+    document.getElementById('final-result').innerHTML = result.text;
+  } else {
+    // 如果没有找到匹配的结果
+    document.getElementById('final-result').innerHTML = "結果を計算できませんでした。";
+  }
+}
+
+  // 重置问题为第一题
+  const firstQuestion = questions[0];
+  document.getElementById('question-image').src = firstQuestion.image;
+  document.getElementById('question-description').textContent = firstQuestion.description;
+
+  const buttons = document.querySelectorAll('.answer-button');
+  buttons.forEach((button, index) => {
+    button.textContent = firstQuestion.answers[index].text;
+    button.setAttribute('onclick', `nextQuestion(${firstQuestion.answers[index].score})`);
+  });
+
+  // 重置背景颜色
+  document.body.style.backgroundColor = backgroundColors[0];
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+/* style.css */
+
+body {
+    background-color: #FF85B7;
+    transition: background-color 0.5s ease; /* 添加过渡效果 */
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .container {
+    background: none;
+    box-shadow: none;
+  }
+  
+  
+  .image-section img {
+    position: absolute;
+    left: 146px;
+    top: 150px;
+    width: 500px;
+    height: auto;
+  }
+  
+  #question-description {
+    display: block;
+    position: absolute;
+    left: 700px;
+    top: 150px;
+    width: 797px;
+    font-size: 18px;
+    color: #333;
+    line-height: 1.5;
+  }
+  
+  .answer-button {
+    position: absolute;
+    left: 700px;
+    width: 400px;
+    height: 60px;
+    background-color: white;
+    color: #555;
+    border: 2px solid #ff92b5;
+    border-radius: 10px;
+    font-size: 16px;
+    text-align: center;
+    line-height: 60px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    top: calc(var(--top-offset) - 220px); /* 统一向上移动200px */
+  }
+  
+  
+  .answer-button:hover {
+    background-color: #ff92b5;
+    color: white;
+  }
+  
+  #result-section {
+    text-align: center;
+    padding-top: 50px;
+  }
+  
+  #result-page {
+    background-color: #FF85B7;
+    padding: 40px;
+    border-radius: 10px;
+    width: 80%;
+    margin: 50px auto;
+    color: #333;
+  }
+
+  #Result Image {
+    height:300px;
+    width:auto;
+    margin-bottom: 20px;
+  }
+
+  #final-result {
+    max-width: 600px;  /* 限制宽度为600px，可以根据需要调整 */
+    margin: 0 auto;  /* 水平居中 */
+    font-size: 18px;
+    line-height: 1.5;
+    word-wrap: break-word;  /* 防止文字溢出 */
+  }
+
+  #back-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #FF85B7;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  #back-button:hover {
+    background-color: #FF6FA1;
+  }
+
+  #start-section {
+    text-align: center;
+    padding: 50px;
+    background-color: #FEF2E8;
+    height: 100vh; /* 确保背景覆盖整个视口高度 */
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    flex-direction: column; /* 子元素从上到下排列 */
+  }
+  
+  #start-button {
+    margin-top: 20px;
+    padding: 15px 30px;
+    font-size: 18px;
+    background-color: #FF85B7;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  #start-button:hover {
+    background-color: #FF6FA1;
+  }
+
+  #quiz-section,
+#result-section {
+  display: none;
+}
