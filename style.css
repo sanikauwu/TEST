@@ -1,10 +1,14 @@
 /* style.css */
   /* 让整个容器居中 */
   .container {
-    width: 90%;
-    max-width: 800px;
-    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     text-align: center;
+    padding: 20px;
+    min-height: 100vh;
+    box-sizing: border-box;
   }
 
   /* 开始页面整体样式 */
@@ -17,7 +21,7 @@
 
   /* 图片自适应 */
   .start-image {
-    max-width: 100%;
+    max-width: 40%;
     height: auto;
     margin-bottom: 20px;
   }
@@ -38,23 +42,39 @@
     background-color: #F67280;
   }
 
-  /* 自适应 - 手机端优化 */
-  @media (max-width: 768px) {
-    #start-section {
-      padding: 20px 10px;
+
+  /* 适配平板和中等屏幕 */
+  @media (max-width: 1024px) {
+    #start-section h1 {
+      font-size: 2rem;
+    }
+    #start-section p {
+      font-size: 1.1rem;
+    }
+  }
+
+  /* 适配手机端 */
+  @media (max-width: 600px) {
+    .container {
+      padding: 10px;
     }
 
-    h1 {
-      font-size: 20px;
+    #start-section h1 {
+      font-size: 1.6rem;
     }
 
-    p {
-      font-size: 14px;
+    #start-section p {
+      font-size: 1rem;
+    }
+
+    .responsive-img {
+      max-width: 80%;
+      margin-bottom: 15px;
     }
 
     #start-button {
-      font-size: 16px;
-      padding: 10px 20px;
+      font-size: 1rem;
+      padding: 10px 25px;
     }
   }
 
@@ -171,16 +191,17 @@ body {
     flex-direction: column; /* 子元素从上到下排列 */
   }
   
+  
   #start-button {
-    margin-top: 20px;
-    padding: 15px 30px;
-    font-size: 18px;
-    background-color: #FF85B7;
-    color: white;
+    background-color: #f8b5b5;
+    color: #5c4545;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 12px 30px;
     border: none;
-    border-radius: 5px;
+    border-radius: 30px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: 0.3s;
   }
   
   #start-button:hover {
@@ -191,3 +212,11 @@ body {
 #result-section {
   display: none;
 }
+
+  /* 图片响应式 */
+  .responsive-img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    margin-bottom: 20px;
+  }
