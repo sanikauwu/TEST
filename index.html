@@ -4,42 +4,247 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>心理テスト</title>
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Noto+Sans+JP&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #FFEDF4;
+      font-family: "Noto Sans JP", sans-serif;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.5s ease;
+      color: #5C4545;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1300px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    /* 开始页 */
+    #start-section {
+      text-align: center;
+      background-color: #FEF2E8;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #start-section img {
+      width: 50%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    #start-button {
+      margin-top: 20px;
+      padding: 15px 30px;
+      font-size: 18px;
+      background-color: #FF85B7;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #start-button:hover {
+      background-color: #FF6FA1;
+    }
+
+    /* 测试页 */
+    #quiz-section {
+      display: none;
+      text-align: center;
+    }
+
+    .image-section img {
+      width: 40%;
+      max-width: 400px;
+      height: auto;
+      margin: 20px auto 20px;
+    }
+
+    #question-description {
+      font-family: "Mochiy Pop One", "Yu Gothic", sans-serif;
+      font-size: 18px;
+      color: #333;
+      margin: 20px auto;
+      width: 80%;
+      line-height: 1.6;
+    }
+
+    .answer-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .answer-button {
+      display: block;
+      width: 80%;
+      max-width: 400px;
+      margin: 10px auto;
+      background-color: #fff;
+      color: #555;
+      border: 1px solid #FF92B5;
+      border-radius: 12px;
+      font-size: 1rem;
+      line-height: 1.5;
+      padding: 15px 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: "Noto Sans JP", sans-serif;
+    }
+
+    .answer-button:hover {
+      background-color: #ff92b5;
+      color: white;
+    }
+    
+  /* ---------- 结果页面 ---------- */
+
+    #result-section {
+      display: none;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    #result-page {
+      background: linear-gradient(180deg, #fffdf9, #FFF7F9);
+      border-radius: 25px;
+      padding: 40px;
+      box-shadow: 0 5px 15px rgba(255, 133, 183, 0.3);
+      width: 90%;
+      max-width: 700px;
+      margin: 0 auto;
+      animation: fadeIn 0.8s ease;
+    }
+
+    .result-title {
+      font-family: "Mochiy Pop One", "Yu Gothic", sans-serif;
+      color: #FF6FA1;
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+
+    .result-image {
+      width: 40%;
+      height: auto;
+      margin: 20px auto;
+      display: block;
+    }
+
+    /* 让所有结果文字都居中 */
+    #final-result {
+      text-align: center;
+      font-size: 1.2rem;
+      color: #5C4545;
+      line-height: 1.8;
+      margin: 20px auto;
+      white-space: pre-line;
+      word-wrap: break-word;
+      max-width: 600px;
+    }
+
+    /* 响应式 */
+    @media (max-width: 768px) {
+      #question-description {
+        font-size: 16px;
+        width: 90%;
+      }
+      .answer-button {
+        width: 90%;
+        font-size: 14px;
+      }
+      .image-section img {
+        width: 70%;
+      }
+    }
+
+    .main-title {
+      font-family: "Mochiy Pop One", "Yu Gothic", sans-serif;
+      font-size: 2.5rem;
+      color: #FF6FA1; /* 柔和粉色 */
+      text-shadow: 2px 2px 0px #fff;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-family: "Noto Sans JP", sans-serif;
+      font-size: 1.2rem;
+      color: #5C4545;
+      margin-bottom: 20px;
+    }
+
+    #back-button {
+      background-color: #FF85B7;
+      color: white;
+      font-size: 1rem;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #back-button:hover {
+      background-color: #FF6FA1;
+      transform: scale(1.05);
+    }
+
+    
+  /* 突出スコア文字 */
+  #score-highlight {
+    display: block;
+    font-family: "Mochiy Pop One", "Yu Gothic", sans-serif;
+    font-size: 1.6rem;
+    color: #FF69B4;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 0 #fff;
+  }
+  </style>
 
 </head>
 <body>
   <div class="container">
-     <!-- home-->
+    <!-- 开始页面 -->
     <div id="start-section">
-      <h1>HSPテストへようこそ!</h1>
-      <p>このテストはあなたの感受性をチェックするものです。</p>
-      <img src="test/start.png" alt="Welcome Image" style="height: 40%; width: auto; margin-bottom: 20px;">
+      <h1 class="main-title">HSPテストへようこそ</h1>
+      <p class="subtitle">あなたの繊細さを、やさしく見つめてみましょう🌸</p>
+
+      <img src="test/start.png" alt="Welcome Image">
       <button id="start-button" onclick="startQuiz()">START</button>
     </div>
 
-    <!-- テスト問題セクション -->
+    <!-- 测试页面 -->
     <div id="quiz-section">
-      <!-- イラスト画像 -->
       <div class="image-section">
-        <img src="test/image1-1.png" alt="イラスト1-1" id="question-image">
-        <!-- 返回按钮 -->
+        <img src="test/image1-1.png" alt="イラスト" id="question-image">
       </div>
-
-      <!-- 質問文 -->
-      <p id="question-description">スクで仕事や勉強をしている時、周りで人が話したり、電話が鳴り続けたら、あなたはどう感じますか</p>
-
-      <!-- 回答ボタン -->
-      <button class="answer-button" style="--top-offset: 501px;" onclick="nextQuestion(3)">とても気が散って、集中できなくなる</button>
-      <button class="answer-button" style="--top-offset: 643px;" onclick="nextQuestion(2)">少し気になるけど、なんとか作業を続けられる</button>
-      <button class="answer-button" style="--top-offset: 785px;" onclick="nextQuestion(1)">音は気にならず、集中して作業できる</button>
+      <p id="question-description"></p>
+      <div class="answer-container">
+        <button class="answer-button" onclick="nextQuestion(3)">とても気が散って、集中できなくなる</button>
+        <button class="answer-button" onclick="nextQuestion(2)">少し気になるけど、なんとか作業を続けられる</button>
+        <button class="answer-button" onclick="nextQuestion(1)">音は気にならず、集中して作業できる</button>
+      </div>
     </div>
 
-    <!-- 結果表示セクション（非表示） -->
-    <div id="result-section" style="display: none;">
-      <h1>テスト結果</h1>
-      <img id="result-image" src="test/end1.png" alt="Result Image"style="height:30%;width:auto; margin-bottom: 20px;">
-      <p>あなたのスコアは：<span id="final-score"></span></p>
-      <p id="final-result"></p>
+    <!-- 结果页面 -->
+    <div id="result-section">
+      <div id="result-page">
+        <h2 class="result-title">🌷 あなたの結果 🌷</h2>
+        <img id="result-image" src="test/end1.png" alt="Result Image">
+        <p>あなたのスコアは：<span id="score-highlight"><span id="final-score"></span></span></p>
+        <p id="final-result"></p>
+        <button id="back-button" onclick="location.reload()">もう一度やる</button>
+      </div> 
     </div>
   </div>
 
@@ -321,6 +526,13 @@ function showResult() {
 
   // 重置背景颜色
   document.body.style.backgroundColor = backgroundColors[0];
+
+  function showQuestion(i) {
+  const q = document.getElementById("question-description");
+  q.classList.remove("fade-in");
+  void q.offsetWidth; // 触发重绘
+  q.classList.add("fade-in");
+}
 
   </script>
 </body>

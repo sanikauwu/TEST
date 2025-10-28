@@ -1,133 +1,205 @@
-/* style.css */
-
+/* =======================
+   全局基础样式
+======================= */
 body {
-    background-color: #FF85B7;
-    transition: background-color 0.5s ease; /* 添加过渡效果 */
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-  }
-  
-  .container {
-    background: none;
-    box-shadow: none;
-  }
-  
-  
-  .image-section img {
-    position: absolute;
-    left: 146px;
-    top: 150px;
-    width: 500px;
-    height: auto;
-  }
-  
-  #question-description {
-    display: block;
-    position: absolute;
-    left: 700px;
-    top: 150px;
-    width: 797px;
-    font-size: 18px;
-    color: #333;
-    line-height: 1.5;
-  }
-  
-  .answer-button {
-    position: absolute;
-    left: 700px;
-    width: 400px;
-    height: 60px;
-    background-color: white;
-    color: #555;
-    border: 2px solid #ff92b5;
-    border-radius: 10px;
-    font-size: 16px;
-    text-align: center;
-    line-height: 60px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-    top: calc(var(--top-offset) - 220px); /* 统一向上移动200px */
-  }
-  
-  
-  .answer-button:hover {
-    background-color: #ff92b5;
-    color: white;
-  }
-  
-  #result-section {
-    text-align: center;
-    padding-top: 50px;
-  }
-  
-  #result-page {
-    background-color: #FF85B7;
-    padding: 40px;
-    border-radius: 10px;
-    width: 80%;
-    margin: 50px auto;
-    color: #333;
-  }
+  background-color: #FF85B7;
+  transition: background-color 0.5s ease;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
 
-  #Result Image {
-    height:300px;
-    width:auto;
-    margin-bottom: 20px;
-  }
+/* =======================
+   容器设置
+======================= */
+.container {
+  width: 90%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
 
-  #final-result {
-    max-width: 600px;  /* 限制宽度为600px，可以根据需要调整 */
-    margin: 0 auto;  /* 水平居中 */
-    font-size: 18px;
-    line-height: 1.5;
-    word-wrap: break-word;  /* 防止文字溢出 */
-  }
+/* =======================
+   开始页面样式
+======================= */
+#start-section {
+  background-color: #FEF2E8;
+  height: 100vh; /* 全屏显示 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-  #back-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #FF85B7;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  #back-button:hover {
-    background-color: #FF6FA1;
-  }
+#start-section h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #333;
+}
 
-  #start-section {
-    text-align: center;
-    padding: 50px;
-    background-color: #FEF2E8;
-    height: 100vh; /* 确保背景覆盖整个视口高度 */
-    display: flex;
-    justify-content: center; /* 水平居中 */
-    align-items: center; /* 垂直居中 */
-    flex-direction: column; /* 子元素从上到下排列 */
-  }
-  
-  #start-button {
-    margin-top: 20px;
-    padding: 15px 30px;
-    font-size: 18px;
-    background-color: #FF85B7;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  #start-button:hover {
-    background-color: #FF6FA1;
-  }
+#start-section p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  color: #444;
+}
 
-  #quiz-section,
+#start-section img {
+  width: 40%;
+  max-width: 400px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+#start-button {
+  margin-top: 20px;
+  padding: 15px 30px;
+  font-size: 18px;
+  background-color: #FF85B7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#start-button:hover {
+  background-color: #FF6FA1;
+}
+
+/* =======================
+   题目区域样式
+======================= */
+#quiz-section {
+  display: none; /* 初始隐藏，点击开始后显示 */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+/* 图片部分 */
+.image-section img {
+  width: 40%;
+  max-width: 400px;
+  height: auto;
+  margin-bottom: 30px;
+}
+
+/* 题目描述 */
+#question-description {
+  width: 90%;
+  max-width: 800px;
+  font-size: 18px;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+/* 答案选项 */
+.answer-container {
+  display: flex;
+  flex-direction: column; /* 竖排 */
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+}
+
+.answer-button {
+  width: 80%;
+  max-width: 400px;
+  height: 60px;
+  background-color: white;
+  color: #555;
+  border: 2px solid #ff92b5;
+  border-radius: 10px;
+  font-size: 16px;
+  text-align: center;
+  line-height: 60px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.answer-button:hover {
+  background-color: #ff92b5;
+  color: white;
+}
+
+/* =======================
+   结果页样式
+======================= */
 #result-section {
   display: none;
+  text-align: center;
+  padding: 50px 20px;
+  min-height: 100vh;
+  background-color: #FF85B7;
+  color: #333;
+}
+
+#result-section img {
+  width: 40%;
+  max-width: 300px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+#final-result {
+  max-width: 600px;
+  margin: 20px auto;
+  font-size: 18px;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+/* 返回按钮 */
+#back-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #FF85B7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#back-button:hover {
+  background-color: #FF6FA1;
+}
+
+/* =======================
+   响应式设计（手机端）
+======================= */
+@media (max-width: 768px) {
+  #start-section img,
+  .image-section img,
+  #result-section img {
+    width: 70%;
+  }
+
+  #start-section h1 {
+    font-size: 1.5rem;
+  }
+
+  #question-description {
+    font-size: 16px;
+  }
+
+  .answer-button {
+    font-size: 14px;
+    height: 50px;
+    line-height: 50px;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
